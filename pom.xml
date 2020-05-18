@@ -52,7 +52,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <cloud.version>2.0.1.RELEASE</cloud.version>
-        <cloud-config-server.version>2.0.1.RELEASE</cloud-config-server.version>
+        <cloud-config-server.version>2.0.5.RELEASE</cloud-config-server.version>
         <cloud-config-client.version>2.0.1.RELEASE</cloud-config-client.version>
         <hystrix.version>2.0.2.RELEASE</hystrix.version>
         <admin-server.version>2.0.2</admin-server.version>
