@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      profile: default #prod test dev
+      label: master
+      uri: http://117.34.73.198:8088/
+      enabled: false
+  application:
+    name: boot-admin

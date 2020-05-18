@@ -1,0 +1,30 @@
+server:
+  local-ip: 106.12.190.252
+  eureka-ip: 127.0.0.1
+  port: 8881
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    #实例信息，显示IP和端口
+    instance-id: ${server.local-ip}:${server.port}
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+    status-page-url: http://${server.local-ip}:${server.port}
+  client:
+    # 指定服务注册中心位置, 可指定多个服务中心
+    service-url:
+      defaultZone: http://eureka:eureka@${server.eureka-ip}:8765/eureka/
+    healthcheck:
+      enabled: true
+spring:
+  application:
+    # 这是发布至注册中心的服务名，靠此服务名服务之间相互调用
+    name: boot-admin
+  boot:
+    admin:
+      ui:
+        title: "缔科网络微服务监控工具"
+        brand: <img src="assets/img/icon-spring-boot-admin.svg"><span>缔科网络微服务监控工具</span>

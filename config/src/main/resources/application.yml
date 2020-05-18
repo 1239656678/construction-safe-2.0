@@ -1,0 +1,37 @@
+server:
+  local-ip: 192.168.10.19
+  eureka-ip: 192.168.10.19
+  port: 8088
+spring:
+  application:
+    name: cloud-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/Gaodl/dico_admin_config.git
+          username: 1966811719@qq.com
+          password: FormerMissthatI
+      label: master
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    #实例信息，显示IP和端口
+    instance-id: ${server.local-ip}:${server.port}
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+  client:
+    # 指定服务注册中心位置, 可指定多个服务中心
+    service-url:
+      defaultZone: http://eureka:eureka@${server.eureka-ip}:8761/eureka/
+    healthcheck:
+      enabled: true
+# 暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

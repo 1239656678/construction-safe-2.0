@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.dico</groupId>
+  <artifactId>dico-tools</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.2-SNAPSHOT</version>
+      <version>0.0.3-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20190513115739</lastUpdated>
+  </versioning>
+</metadata>

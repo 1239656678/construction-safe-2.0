@@ -1,0 +1,74 @@
+server:
+  local-ip: 192.168.1.19
+  eureka-ip: 127.0.0.1
+  port: 8080
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        # 系统管理模块
+        - id: dico-base
+          uri: lb://dico-base
+          predicates:
+            - Path= /dico-base/**
+          filters:
+            # 所有转发的请求去掉前缀
+            - RewritePath=/dico-base/(?<segment>.*), /$\{segment}
+        # 安全管理平台模块
+        - id: construction-safe
+          uri: lb://construction-safe
+          predicates:
+            - Path= /construction-safe/**
+          filters:
+            # 所有转发的请求去掉前缀
+            - RewritePath=/construction-safe/(?<segment>.*), /$\{segment}
+        # 安全管理平台手机端
+        - id: sms-interface
+          uri: lb://sms-interface
+          predicates:
+            - Path= /sms-interface/**
+          filters:
+            # 所有转发的请求去掉前缀
+            - RewritePath=/sms-interface/(?<segment>.*), /$\{segment}
+        # 流程业务逻辑
+        - id: activiti
+          uri: lb://activiti
+          predicates:
+            - Path= /activiti/**
+          filters:
+            # 所有转发的请求去掉前缀
+            - RewritePath=/activiti/(?<segment>.*), /$\{segment}
+      discovery:
+        locator:
+          # 服务名称小写匹配
+          lower-case-service-id: true
+  http:
+    encoding:
+      charset: UTF-8
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    #实例信息，显示IP和端口
+    instance-id: ${server.local-ip}:${server.port}
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+  client:
+    # 指定服务注册中心位置, 可指定多个服务中心
+    service-url:
+      defaultZone: http://eureka:eureka@${server.eureka-ip}:8765/eureka/
+    healthcheck:
+      enabled: true
+# 暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+jwt:
+  header: Authorization
+  secret: qwertyuiop

@@ -1,0 +1,88 @@
+server:
+  local-ip: 106.12.190.252
+  eureka-ip: 127.0.0.1
+  zipkin-ip: 106.12.190.252
+  port: 8086
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    #实例信息，显示IP和端口
+    instance-id: ${server.local-ip}:${server.port}
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+    status-page-url: http://${server.local-ip}:${server.port}/swagger-ui.html
+  client:
+    # 指定服务注册中心位置, 可指定多个服务中心
+    service-url:
+      defaultZone: http://eureka:eureka@${server.eureka-ip}:8765/eureka/
+    healthcheck:
+      enabled: true
+spring:
+  application:
+    # 这是发布至注册中心的服务名，靠此服务名服务之间相互调用
+    name: construction-safe
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/construction_safe?serverTimezone=Hongkong&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    filters: stat
+    minEvictableIdleTimeMillis: 300000      # 配置一个连接在池中最小生存的时间，单位是毫秒
+    poolPreparedStatements: true
+  jpa:
+    open-in-view: true
+    show-sql: true
+  # 启用Feign重写功能
+  main:
+    allow-bean-definition-overriding: true
+  zipkin:
+    enabled: true
+    baseUrl: http://${server.zipkin-ip}:9411/
+  sleuth:
+    sampler:
+      probability: 1
+# 暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# 开启熔断机制
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    connection-timeout: 5000
+hystrix:
+  command:
+    default:
+      execution:
+        # feignclient 传递request
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000 #断路器超时时间，默认1000ms
+        # 设置超时时间为超时
+        timeout:
+          enable: true
+ribbon:
+  OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
+  ReadTimeout: 6000   #负载均衡超时时间，默认值5000
+  ConnectTimeout: 3000 #ribbon请求连接的超时时间，默认值2000
+  MaxAutoRetries: 0     #对当前实例的重试次数，默认0
+  MaxAutoRetriesNextServer: 1 #对切换实例的重试次数，默认1
+# 二维码扫描结果地址
+diy:
+  equipment:
+    qr-code-content: http://106.12.190.252:8080/construction-safe
+    view-methd: /smsEquipment/dataInfo?smsEquipmentId=
+  word:
+    #save-url: F:/soft/nginx-1.14.0/static/word/
+    save-url: /usr/share/nginx/static/word/

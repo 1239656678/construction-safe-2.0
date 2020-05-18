@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="sys-shiro" maxBytesLocalHeap="100M">
+    <diskStore path="java.io.tmpdir/shiro-cache"/>
+
+    <!--
+        name: Cache的唯一标识.
+        maxElementsInMemory: 内存中最大缓存对象数.
+        maxElementsOnDisk: 磁盘中最大缓存对象数, 若是0表示无穷大.
+        eternal: Element 是否永久有效, 一但设置了, timeout 将不起作用.
+        overflowToDisk: 当内存中 Element 数量达到 maxElementsInMemory 时, Ehcache 是否将 Element 写到磁盘中.
+        timeToIdleSeconds: 设置 Element 在失效前的允许闲置时间. 仅当 element 不是永久有效时使用,
+                                    可选属性, 默认为 0 : 表示可闲置时间无穷大.
+        timeToLiveSeconds: 设置 Element 在失效前允许存活时间. 最大时间介于创建时间和失效时间之间.
+                                    仅当 Element 不是永久有效时使用, 默认为 0 : 表示存活时间无穷大.
+        diskPersistent: 是否缓存虚拟机重启期数据. (一直没明白这个虚拟机是指什么).
+        diskExpiryThreadIntervalSeconds: 磁盘失效线程运行时间间隔, 默认是 120 秒.
+        diskSpoolBufferSizeMB: 这个参数设置 DiskStore(磁盘缓存) 的缓存区大小. 默认 30MB.
+        memoryStoreEvictionPolicy: 当达到 maxElementsInMemory 限制时, Ehcache 将会根据指定的策略去清理内存.
+                                    默认策略是 LRU(最近最少使用). 可以设置为 FIFO(先进先出) 或 LFU(较少使用).
+    -->
+    <defaultCache
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
+            overflowToDisk="false">
+    </defaultCache>
+
+    <!-- shiro 会话缓存  -->
+    <cache name="shiro-activeSessionCache"
+           overflowToDisk="true"
+           eternal="false"
+           diskPersistent="false"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           statistics="true"/>
+
+</ehcache>

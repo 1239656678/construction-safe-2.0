@@ -1,0 +1,55 @@
+server:
+  local-ip: 106.12.190.252
+  eureka-ip: 106.12.190.252
+  port: 9411
+zipkin:
+  storage:
+    type: mysql
+spring:
+  application:
+    name: cloud-sleuth
+  main:
+    allow-bean-definition-overriding: true
+  zipkin:
+    enabled: false
+  sleuth:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://106.12.190.252:3306/cloud_sleuth?serverTimezone=GMT%2b8&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    filters: stat
+    minEvictableIdleTimeMillis: 300000      # 配置一个连接在池中最小生存的时间，单位是毫秒
+    poolPreparedStatements: true
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    #实例信息，显示IP和端口
+    instance-id: ${server.local-ip}:${server.port}
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+    status-page-url-path: http://${server.local-ip}:${server.port}/
+  client:
+    # 指定服务注册中心位置, 可指定多个服务中心
+    service-url:
+      defaultZone: http://eureka:eureka@${server.eureka-ip}:8761/eureka/
+    healthcheck:
+      enabled: true
+# 暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
