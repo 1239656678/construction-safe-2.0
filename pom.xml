@@ -68,7 +68,7 @@
         <zipkin-server.version>2.11.10</zipkin-server.version>
         <cloud-starter-zipkin.version>2.0.0.RELEASE</cloud-starter-zipkin.version>
         <jjwt.version>0.9.0</jjwt.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <shiro-ehcache.version>1.4.0</shiro-ehcache.version>
         <dico-tools.version>0.0.3-SNAPSHOT</dico-tools.version>
         <fastjson.version>1.2.41</fastjson.version>
