@@ -61,7 +61,7 @@
         <eureka-client.version>2.0.1.RELEASE</eureka-client.version>
         <security.version>2.1.0.RELEASE</security.version>
         <openfeign.version>2.0.2.RELEASE</openfeign.version>
-        <webflux.version>2.0.3.RELEASE</webflux.version>
+        <webflux.version>2.5.12</webflux.version>
         <gateway.version>2.0.2.RELEASE</gateway.version>
         <cloud-sleuth.version>2.0.0.RELEASE</cloud-sleuth.version>
         <zipkin-ui.version>2.11.10</zipkin-ui.version>
