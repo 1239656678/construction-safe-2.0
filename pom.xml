@@ -71,7 +71,7 @@
         <shiro.version>1.4.0</shiro.version>
         <shiro-ehcache.version>1.4.0</shiro-ehcache.version>
         <dico-tools.version>0.0.3-SNAPSHOT</dico-tools.version>
-        <fastjson.version>1.2.41</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <swagger2.version>2.7.0</swagger2.version>
         <swagger-ui.version>2.7.0</swagger-ui.version>
         <mobile.version>1.1.5.RELEASE</mobile.version>
